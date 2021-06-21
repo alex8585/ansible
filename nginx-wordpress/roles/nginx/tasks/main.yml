@@ -1,0 +1,30 @@
+---
+- name: Check if http_host is empty
+  assert:
+    that:
+      - http_host != ''
+    msg: "'http_host' can not be empty"
+
+# Nginx Configuration
+- name: Sets Nginx conf file
+  become: true
+  template:
+    src: "templates/wp.conf"
+    dest: "/etc/nginx/sites-available/{{ http_host }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enables new site
+  become: true
+  file:
+    src: "/etc/nginx/sites-available/{{ http_host }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ http_host }}.conf"
+    state: link
+  notify: Restart Nginx
+
+- name: Add a line to hosts
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    line: 127.0.0.1 local-{{http_host}}.com
+  become: true
