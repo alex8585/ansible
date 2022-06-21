@@ -1,5 +1,5 @@
 #Nginx conf
-server_root: /home/alex/projects/
+server_root: /home/alex/data/projects/
 
 
 

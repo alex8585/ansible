@@ -16,7 +16,7 @@
     src: /tmp/wordpress.tar.gz
     dest: /tmp
     owner: alex
-    group: www-data
+    group: alex
     copy: no
   become: yes
   when: not check_path.stat.exists
@@ -36,7 +36,7 @@
     src: "templates/wp-config.php"
     dest: "{{ server_root }}{{ http_host}}/wp-config.php"
     owner: alex
-    group: www-data
+    group: alex
     mode: 0774
   become: yes
 

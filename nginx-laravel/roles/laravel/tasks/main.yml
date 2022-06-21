@@ -7,17 +7,17 @@
 
 - name: Create a laravel directory if it does not exist
   ansible.builtin.file:
-    path: /home/alex/projects/{{http_host}}
+    path: /home/alex/data/projects/{{http_host}}
     state: directory
     owner: alex
-    group: www-data
+    group: alex
     mode: "0775"
 
 - name: Install laravel
   shell:
     cmd: composer create-project laravel/laravel {{http_host}}
-    chdir: /home/alex/projects/
-    creates: "/home/alex/projects/{{ http_host }}/public"
+    chdir: /home/alex/data/projects/
+    creates: "/home/alex/data/projects/{{ http_host }}/public"
 
 - name: Replace DB_DATABASE in .env conf
   ansible.builtin.lineinfile:
